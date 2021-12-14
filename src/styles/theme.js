@@ -2,6 +2,7 @@ const theme = {
   black: '#000',
   darkGray: '#666',
   gray: '#a2a2a2',
+  mediumGray: '#e5e5e5',
   lightGray: '#f8f8f8',
   white: '#fff',
   red: '#fd3049',
@@ -27,11 +28,7 @@ const theme = {
 
   marginCenter: '0 auto',
 
-  flexSpaceBetweenCenter: (
-    direction = 'row',
-    align = 'center',
-    justify = 'center'
-  ) => `
+  flex: (direction = 'row', align = 'center', justify = 'center') => `
     display: flex;
     flex-direction: ${direction};
     align-items: ${align};
