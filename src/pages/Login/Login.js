@@ -7,10 +7,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
 
-  useEffect(() => {
-    localStorage.getItem('kakao_token') ? setIsLogin(true) : setIsLogin(false);
-  }, [isLogin]);
-
   const handleKakaoLogin = () => {
     kakaoLogin(navigate, setIsLogin);
   };
