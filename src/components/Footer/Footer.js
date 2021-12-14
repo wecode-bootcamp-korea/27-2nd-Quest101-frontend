@@ -1,45 +1,63 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
+
 import { FOOTER_DATA_LIST_1, FOOTER_DATA_LIST_2 } from './footerData';
+import usePathValid from '../hooks/usePathValid';
+import { kakaoBreakConnection } from '../../service/kakaoAPI';
+import styled from 'styled-components';
 
-const Footer = props => (
-  <FooterContainer>
-    <FooterWrapper>
-      <div>
-        <MainLogo>QUEST101</MainLogo>
-        <Description>
-          퀘스트101은 클래스를 통해 자신을 키우는
-          <br /> 현실 캐릭터 빌드업 서비스 사이트입니다.
-        </Description>
-        <DescriptionStore>🇰🇷 한국어/ 한국 스토어</DescriptionStore>
-      </div>
+const Footer = props => {
+  const { pathname } = useLocation();
 
-      <div>
-        <Title>퀘스트101</Title>
-        <ul>
-          {FOOTER_DATA_LIST_1.map(data => {
-            return <List key={data.id}>{data.value}</List>;
-          })}
-        </ul>
-      </div>
+  const [isPathValid] = usePathValid(pathname);
 
-      <div>
-        <Title>크리에이터</Title>
-        <ul>
-          {FOOTER_DATA_LIST_2.map(data => {
-            return <List key={data.id}>{data.value}</List>;
-          })}
-        </ul>
-      </div>
+  const handleKakaoDisconnect = () => {
+    kakaoBreakConnection();
+  };
 
-      <div>
-        <Title>고객센터</Title>
-        <Button>문의하기</Button>
-        <P>오전 10시 ~ 오후 6시 (주말, 공휴일 제외)</P>
-      </div>
-    </FooterWrapper>
-  </FooterContainer>
-);
+  // isPathValid && <button onClick={handleKakaoDisconnect}>계정연결끊기</button>;
+
+  return (
+    isPathValid && (
+      <FooterContainer>
+        <FooterWrapper>
+          <div>
+            <MainLogo>QUEST101</MainLogo>
+            <Description>
+              퀘스트101은 클래스를 통해 자신을 키우는
+              <br /> 현실 캐릭터 빌드업 서비스 사이트입니다.
+            </Description>
+            <DescriptionStore>🇰🇷 한국어/ 한국 스토어</DescriptionStore>
+          </div>
+          <div>
+            <Title>퀘스트101</Title>
+            <ul>
+              {FOOTER_DATA_LIST_1.map(data => {
+                return <List key={data.id}>{data.value}</List>;
+              })}
+            </ul>
+          </div>
+
+          <div>
+            <Title>크리에이터</Title>
+            <ul>
+              {FOOTER_DATA_LIST_2.map(data => {
+                return <List key={data.id}>{data.value}</List>;
+              })}
+            </ul>
+          </div>
+
+          <div>
+            <Title>고객센터</Title>
+            <Button>문의하기</Button>
+            <P>오전 10시 ~ 오후 6시 (주말, 공휴일 제외)</P>
+          </div>
+        </FooterWrapper>
+      </FooterContainer>
+    )
+  );
+};
+
 export default Footer;
 
 const FooterContainer = styled.footer`

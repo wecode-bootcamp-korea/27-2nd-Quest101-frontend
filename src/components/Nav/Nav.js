@@ -1,36 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
+import usePathValid from '../hooks/usePathValid';
 import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { kakaoLogingOut } from '../../service/kakaoAPI';
 
-const Nav = props => (
-  <HeaderContainer>
-    <Header>
-      <Link to="/">
-        <Logo>QUEST101</Logo>
-      </Link>
-      <TitleClass>클래스</TitleClass>
-      <SearchContainer>
-        <Input type="search" placeholder="찾으시는 취미가 있으신가요?" />
-        <SearchIcon />
-      </SearchContainer>
-      <Link to="/">
-        <DarkMode>다크모드</DarkMode>
-      </Link>
+const Nav = props => {
+  const { pathname } = useLocation();
 
-      <Link to="/">
-        <LogOut>로그아웃</LogOut>
-      </Link>
-      <Link to="/">
-        <Likey />
-      </Link>
-      <Link to="/">
-        <UserImage />
-      </Link>
-    </Header>
-  </HeaderContainer>
-);
+  const [isLogin, setIsLogin] = useState(false);
+
+  const [isNavPathVaild] = usePathValid(pathname);
+
+  const handleKakaoLogout = () => {
+    kakaoLogingOut(setIsLogin);
+  };
+
+  return (
+    isNavPathVaild && (
+      <HeaderContainer>
+        <Header>
+          <Link to="/">
+            <Logo>QUEST101</Logo>
+          </Link>
+          <TitleClass>클래스</TitleClass>
+          <SearchContainer>
+            <Input type="search" placeholder="찾으시는 취미가 있으신가요?" />
+            <SearchIcon />
+          </SearchContainer>
+          <Link to="/">
+            <DarkMode>다크모드</DarkMode>
+          </Link>
+          <Link to="/">
+            <LogOut>로그아웃</LogOut>
+          </Link>
+          <Link to="/">
+            <Likey />
+          </Link>
+          <Link to="/">
+            <UserImage />
+          </Link>
+        </Header>
+      </HeaderContainer>
+    )
+  );
+};
+
 export default Nav;
 
 const HeaderContainer = styled.header`
