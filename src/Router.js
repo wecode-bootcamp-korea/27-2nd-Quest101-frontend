@@ -10,21 +10,19 @@ import Creator from './pages/Creator/Creator';
 import Login from './pages/Login/Login';
 import CreatorNav from './components/Nav/CreatorNav';
 
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <Nav />
-      <CreatorNav />
-      <Routes>
-        <Route path="/:id" element={<ProductList />} />
-        <Route path="/detail/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/creator" element={<Creator />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
-  );
-};
+const Router = () => (
+  <BrowserRouter>
+    <Nav />
+    <Routes>
+      <Route path="/" element={<ProductList />} />
+      <Route path="/category/:id" element={<ProductList />} />
+      <Route path="/detail/:id" element={<ProductDetail />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/creator" element={<Creator />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
+    <Footer />
+  </BrowserRouter>
+);
 
 export default Router;
