@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
-const ProductDetail = (props) => <h1>ProductDetail</h1>;
+const ProductDetail = () => <h1>ProductDetail</h1>;
 
 export default ProductDetail;
