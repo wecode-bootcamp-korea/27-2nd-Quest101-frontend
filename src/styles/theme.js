@@ -28,6 +28,7 @@ const theme = {
   borderRadius12: '12px',
 
   borderGray: '1px solid #e8e8e8',
+  borderBlack: '1px solid #000',
 
   marginCenter: '0 auto',
 
@@ -44,6 +45,13 @@ const theme = {
     left: 50%;
     transform: translate(-50%, -50%);
     `,
+
+  positionFixed: `
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:999;
+  `,
 };
 
 export default theme;
