@@ -1,11 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
+    
     body {
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
         font-family: "Noto Sans KR", sans-serif;
+
     }
     
     input {
@@ -34,6 +37,11 @@ const GlobalStyle = createGlobalStyle`
 
     a {
         text-decoration: none;
+    }
+
+    ::selection {
+        color: ${theme.white};
+        background-color: #ff5600;
     }
 `;
 
