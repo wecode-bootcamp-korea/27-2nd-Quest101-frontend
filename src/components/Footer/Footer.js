@@ -15,6 +15,8 @@ const Footer = props => {
     kakaoBreakConnection();
   };
 
+  // isPathValid && <button onClick={handleKakaoDisconnect}>계정연결끊기</button>;
+
   return (
     isPathValid && (
       <FooterContainer>
@@ -49,7 +51,10 @@ const Footer = props => {
             <Title>고객센터</Title>
             <Button>문의하기</Button>
             <P>오전 10시 ~ 오후 6시 (주말, 공휴일 제외)</P>
+<<<<<<< HEAD
             <Button onClick={handleKakaoDisconnect}>카카오 계정연결해제</Button>
+=======
+>>>>>>> 1d0947f (Modify: 리스트페이지 구현 완료)
           </div>
         </FooterWrapper>
       </FooterContainer>

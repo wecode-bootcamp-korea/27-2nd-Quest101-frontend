@@ -1,92 +1,64 @@
-[
-  {
-    "id": 1,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "브라멘샤샤",
-    "description": "1색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 125000,
-    "month": 5
-  },
-  {
-    "id": 2,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "앤드엣 성영은 작가",
-    "description": "2색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 225000,
-    "month": 4
-  },
-  {
-    "id": 3,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "캐널&은정",
-    "description": "3색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 325000,
-    "month": 2
-  },
-  {
-    "id": 4,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "곰곰한 하루",
-    "description": "4색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 425000,
-    "month": 5
-  },
-  {
-    "id": 5,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "더니팅",
-    "description": "5색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 525000,
-    "month": 3
-  },
-  {
-    "id": 6,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "바늘이야기 김대리",
-    "description": "색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 625000,
-    "month": 7
-  },
-  {
-    "id": 7,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "곰곰한 하루",
-    "description": "색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 198000,
-    "month": 5
-  },
-  {
-    "id": 8,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "더니팅",
-    "description": "색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 250500,
-    "month": 5
-  },
-  {
-    "id": 9,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "바늘이야기 김대리",
-    "description": "색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 425000,
-    "month": 8
-  },
-  {
-    "id": 10,
-    "src": "https://cdn.class101.net/images/80783fee-1e83-4c0a-b811-a1fd1ec579bb/750xauto.webp",
-    "class_name": "바늘이야기 김대리",
-    "description": "색과 향으로 물들이는 힐링, 입욕제 만들기",
-    "heart": 368,
-    "total_price": 70000,
-    "month": 9
-  }
-]
+{
+  "results": [
+    {
+      "course_id": 3,
+      "thumbnail": "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1867&q=80",
+      "user_name": "라오스",
+      "sub_category": "sub4",
+      "course_name": "[🏆TOP30] 급부상 중인 블루오션 <인스타 마켓> 억대 매출 팔이피플에게 배우기",
+      "price": "9000.00",
+      "payment_period": 5,
+      "course_like": 0
+    },
+    {
+      "course_id": 1,
+      "thumbnail": "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1867&q=80",
+      "user_name": "이땡땡",
+      "sub_category": "sub3",
+      "course_name": "[🏆TOP30] 천재 사업가 '대학생김머신'의 무엇이든 팔 수 있는 쇼핑몰 창업가이드",
+      "price": "8000.00",
+      "payment_period": 3,
+      "course_like": 0
+    },
+    {
+      "course_id": 2,
+      "thumbnail": "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1867&q=80",
+      "user_name": "김가나",
+      "sub_category": "sub2",
+      "course_name": "[🎁연말특가] SNS 속 그 집! 세상에 하나뿐인 집을 만드는 '셀프 인테리어 바이블'",
+      "price": "9000.00",
+      "payment_period": 5,
+      "course_like": 0
+    },
+    {
+      "course_id": 4,
+      "thumbnail": "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1867&q=80",
+      "user_name": "라오스",
+      "sub_category": "sub4",
+      "course_name": "클래스3",
+      "price": "9000.00",
+      "payment_period": 5,
+      "course_like": 0
+    },
+    {
+      "course_id": 5,
+      "thumbnail": "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1867&q=80",
+      "user_name": "이땡땡",
+      "sub_category": "sub3",
+      "course_name": "클래스1",
+      "price": "8000.00",
+      "payment_period": 3,
+      "course_like": 0
+    },
+    {
+      "course_id": 6,
+      "thumbnail": "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1867&q=80",
+      "user_name": "김가나",
+      "sub_category": "sub2",
+      "course_name": "클래스2",
+      "price": "9000.00",
+      "payment_period": 5,
+      "course_like": 0
+    }
+  ]
+}

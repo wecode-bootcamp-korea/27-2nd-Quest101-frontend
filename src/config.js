@@ -13,4 +13,6 @@ export const API = {
   DETAIL_PAGE: `${BASE_URL}/products`,
   COMMENT: `${BASE_URL}/products/comments`,
   RELATED: `${BASE_URL}/postings`,
+  LOGIN: `${BASE_URL}/users/kakaosignin`,
+  LIST: `${BASE_URL}/products`,
 };
