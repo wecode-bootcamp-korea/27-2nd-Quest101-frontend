@@ -56,24 +56,20 @@ const Nav = () => {
 };
 
 export default Nav;
-
 const HeaderContainer = styled.header`
   border-bottom: 1px solid ${props => props.theme.mediumGray};
 `;
-
 const Header = styled.div`
   ${props => props.theme.flex('row', 'center', 'space-between')};
   width: 1100px;
   margin: 0 auto;
   padding: 20px 0;
 `;
-
 const Logo = styled.h1`
   color: ${props => props.theme.black};
   font-size: ${props => props.theme.fontLarge};
   font-weight: ${props => props.theme.weightBold};
 `;
-
 const TitleClass = styled.h2`
   padding-right: 40px;
   color: ${props => props.theme.orange};
@@ -84,7 +80,6 @@ const TitleClass = styled.h2`
 const SearchContainer = styled.div`
   position: relative;
 `;
-
 const Input = styled.input`
   width: 520px;
   padding: 12px 52px 12px 16px;
@@ -93,12 +88,10 @@ const Input = styled.input`
   border-radius: 24px;
   text-align: left;
 `;
-
 const DarkMode = styled.button`
   color: ${props => props.theme.black};
   font-size: ${props => props.theme.fontRegular};
 `;
-
 const LogOut = styled.button`
   color: ${props => props.theme.black};
   font-size: ${props => props.theme.fontRegular};
@@ -115,12 +108,10 @@ const SearchIcon = styled(AiOutlineSearch)`
   right: 40px;
   font-size: ${props => props.theme.fontLarge};
 `;
-
 const Likey = styled(HiOutlineHeart)`
   color: ${props => props.theme.black};
   font-size: ${props => props.theme.fontLarge};
 `;
-
 const UserImage = styled.img.attrs({
   src: '/images/default-user.png',
 })`
