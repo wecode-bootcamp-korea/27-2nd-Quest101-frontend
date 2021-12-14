@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> 1d0947f (Modify: 리스트페이지 구현 완료)
 import { Link, useLocation } from 'react-router-dom';
 
 import usePathValid from '../hooks/usePathValid';
 import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
+<<<<<<< HEAD
 import { AiOutlineConsoleSql, AiOutlineSearch } from 'react-icons/ai';
 import { kakaoLogingOut } from '../../service/kakaoAPI';
 
@@ -14,6 +19,15 @@ const Nav = () => {
   useEffect(() => {
     localStorage.getItem('kakao_token') ? setIsLogin(true) : setIsLogin(false);
   }, []);
+=======
+import { AiOutlineSearch } from 'react-icons/ai';
+import { kakaoLogingOut } from '../../service/kakaoAPI';
+
+const Nav = props => {
+  const { pathname } = useLocation();
+
+  const [isLogin, setIsLogin] = useState(false);
+>>>>>>> 1d0947f (Modify: 리스트페이지 구현 완료)
 
   const [isNavPathVaild] = usePathValid(pathname);
 

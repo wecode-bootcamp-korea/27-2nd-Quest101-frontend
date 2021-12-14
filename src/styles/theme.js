@@ -24,6 +24,9 @@ const theme = {
   weightRegular: '400',
   weightThin: '300',
 
+  borderRadius4: '4px',
+  borderRadius12: '12px',
+
   borderGray: '1px solid #e8e8e8',
 
   marginCenter: '0 auto',
