@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const HeartButton = props => {
-  const { text, icon } = props;
-
+  const { text, icon, number } = props;
   return (
     <HeartButtonContainer>
       <p>{icon}</p>
-      <HeartButtonText>{text}</HeartButtonText>
+      <HeartButtonText>{text ? text : number}</HeartButtonText>
     </HeartButtonContainer>
   );
 };
