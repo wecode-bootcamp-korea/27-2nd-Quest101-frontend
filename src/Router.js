@@ -10,6 +10,8 @@ import Creator from './pages/CreatorCenter/Creator';
 import CreatorEdit from './pages/CreatorCenter/CreatorEdit';
 import Login from './pages/Login/Login';
 import Footer from './components/Footer/Footer';
+import CreatorNav from './components/Nav/CreatorNav';
+import MyPage from './pages/MyPage/MyPage';
 
 const Router = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -24,6 +26,7 @@ const Router = () => {
         <Route path="/creator" element={<Creator />} />
         <Route path="/creator/:id/edit" element={<CreatorEdit />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
