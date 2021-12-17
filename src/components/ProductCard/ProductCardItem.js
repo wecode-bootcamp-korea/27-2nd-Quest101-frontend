@@ -83,6 +83,7 @@ const Thumbnail = styled.img`
   height: 200px;
   margin-top: 30px;
   border-radius: ${props => props.theme.borderRadius4};
+  object-fit: cover;
 `;
 const UserName = styled.h5`
   font-size: ${props => props.theme.fontMicro};
