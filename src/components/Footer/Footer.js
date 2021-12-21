@@ -15,8 +15,6 @@ const Footer = props => {
     kakaoBreakConnection();
   };
 
-  // isPathValid && <button onClick={handleKakaoDisconnect}>계정연결끊기</button>;
-
   return (
     isPathValid && (
       <FooterContainer>
@@ -51,6 +49,7 @@ const Footer = props => {
             <Title>고객센터</Title>
             <Button>문의하기</Button>
             <P>오전 10시 ~ 오후 6시 (주말, 공휴일 제외)</P>
+            <Button onClick={handleKakaoDisconnect}>카카오 계정연결해제</Button>
           </div>
         </FooterWrapper>
       </FooterContainer>
@@ -113,6 +112,7 @@ const Button = styled.button`
 
 const P = styled.p`
   ${props => props.theme.flex('row', 'center', 'center')};
+  padding: 4px 0 18px;
   color: ${props => props.theme.gray};
   font-size: ${props => props.theme.fontRegular};
 `;

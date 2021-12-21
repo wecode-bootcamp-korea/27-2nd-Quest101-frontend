@@ -6,18 +6,37 @@ export const kakaoInit = () => {
   Kakao.init(process.env.REACT_APP_KAKAO_API_KEY);
 };
 
+// 프론트 테스트 통신용
 export const kakaoLogin = (navigate, setIsLogin) => {
   if (!Kakao.isInitialized()) kakaoInit();
 
   Kakao.Auth.loginForm({
     success: authObj => {
-      sendKakaoTokenToBackEnd(authObj.access_token, navigate, setIsLogin);
+      localStorage.setItem('kakao_token', authObj.access_token);
+      setIsLogin(true);
+      alert('환영합니다.');
+      navigate('/');
+      return;
     },
     fail: function (error) {
       console.error(error);
     },
   });
 };
+
+// 백엔드 통신용
+// export const kakaoLogin = (navigate, setIsLogin) => {
+//   if (!Kakao.isInitialized()) kakaoInit();
+
+//   Kakao.Auth.loginForm({
+//     success: authObj => {
+//       sendKakaoTokenToBackEnd(authObj.access_token, navigate, setIsLogin);
+//     },
+//     fail: function (error) {
+//       console.error(error);
+//     },
+//   });
+// };
 
 // export const sendKakaoTokenToBackEnd = (access_token, navigate, setIsLogin) => {
 //   if (access_token) {
@@ -50,7 +69,9 @@ export const kakaoBreakConnection = () => {
   Kakao.API.request({
     url: '/v1/user/unlink',
     success: function (response) {
+      localStorage.clear();
       alert('카카오 계정이 정상적으로 해제되었습니다.');
+      return true;
     },
     fail: function (error) {
       console.error(error);
@@ -59,11 +80,14 @@ export const kakaoBreakConnection = () => {
 };
 
 export const kakaoLogingOut = setIsLogin => {
-  Kakao.Auth &&
-    Kakao.Auth.logout(function () {
-      localStorage.clear();
-      setIsLogin(false);
-      alert('로그아웃 되었습니다.');
-      return;
-    });
+  if (!Kakao.Auth.getAccessToken()) {
+    alert('로그인 상태가 아닙니다.');
+    return;
+  }
+  Kakao.Auth.logout(function () {
+    localStorage.clear();
+    setIsLogin(false);
+    alert('로그아웃 되었습니다.');
+    return;
+  });
 };

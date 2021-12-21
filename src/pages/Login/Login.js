@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { kakaoLogin } from '../../service/kakaoAPI';
@@ -6,6 +6,10 @@ import { kakaoLogin } from '../../service/kakaoAPI';
 const Login = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem('kakao_token') ? setIsLogin(true) : setIsLogin(false);
+  }, [isLogin]);
 
   const handleKakaoLogin = () => {
     kakaoLogin(navigate, setIsLogin);
