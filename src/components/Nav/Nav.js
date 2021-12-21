@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import usePathValid from '../hooks/usePathValid';
 import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineConsoleSql, AiOutlineSearch } from 'react-icons/ai';
 import { kakaoLogingOut } from '../../service/kakaoAPI';
 
-const Nav = props => {
+const Nav = () => {
   const { pathname } = useLocation();
-
   const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem('kakao_token') ? setIsLogin(true) : setIsLogin(false);
+  }, []);
 
   const [isNavPathVaild] = usePathValid(pathname);
 
@@ -33,9 +36,13 @@ const Nav = props => {
           <Link to="/">
             <DarkMode>다크모드</DarkMode>
           </Link>
-          <Link to="/">
-            <LogOut>로그아웃</LogOut>
-          </Link>
+          {isLogin ? (
+            <LogOut onClick={handleKakaoLogout}>로그아웃</LogOut>
+          ) : (
+            <Link to="/login">
+              <LogIn>로그인</LogIn>
+            </Link>
+          )}
           <Link to="/">
             <Likey />
           </Link>
@@ -93,6 +100,11 @@ const DarkMode = styled.button`
 `;
 
 const LogOut = styled.button`
+  color: ${props => props.theme.black};
+  font-size: ${props => props.theme.fontRegular};
+`;
+
+const LogIn = styled.button`
   color: ${props => props.theme.black};
   font-size: ${props => props.theme.fontRegular};
 `;
