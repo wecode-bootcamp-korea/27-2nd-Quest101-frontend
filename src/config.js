@@ -8,4 +8,5 @@ export const API = {
   DETAIL_PAGE: `${BASE_URL}/products/detail`,
   LIKE: `${BASE_URL}/products/like`,
   PRODUCTS: `${BASE_URL}/products`,
+  LIST: `${BASE_URL}/products`,
 };

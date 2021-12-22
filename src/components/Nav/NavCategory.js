@@ -15,17 +15,17 @@ function NavCategory() {
   const navigate = useNavigate();
 
   const navigateCategory = category => {
-    navigate(`?category=${category}`);
+    navigate(`/category?category=${category}`);
   };
 
   const navigateSubCategory = (category, subcategory) => {
-    navigate(`?category=${category}&sub_category=${subcategory}`);
+    navigate(`/category?category=${category}&sub_category=${subcategory}`);
   };
 
   return (
     <CategoryContainer>
       <CategoryWrapper>
-        <Category onClick={() => navigateCategory('디지털 아트')}>
+        <Category onClick={() => navigateCategory('디지털아트')}>
           디지털 아트
         </Category>
         <SubCategoryContainer>
@@ -34,7 +34,7 @@ function NavCategory() {
               return (
                 <SubCategory
                   key={data.id}
-                  onClick={() => navigateSubCategory('디지털 아트', data.value)}
+                  onClick={() => navigateSubCategory('디지털아트', data.value)}
                 >
                   {data.value}
                 </SubCategory>
