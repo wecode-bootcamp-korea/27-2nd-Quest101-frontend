@@ -19,15 +19,14 @@ const Router = () => {
       <CreatorNav />
       <Routes>
         <Route path="/:id" element={<ProductList />} />
-        <Route path="/detail/:id" element={<ProductDetail />} />
+        <Route path="/category" element={<ProductListCategory />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/creator" element={<Creator />} />
         <Route path="/creator/:id/edit" element={<CreatorEdit />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
   );
 };
-
-export default Router;

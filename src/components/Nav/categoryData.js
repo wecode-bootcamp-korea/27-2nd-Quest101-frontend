@@ -1,7 +1,7 @@
 export const CATEGORY_DATA_LIST_1 = [
   {
     id: 1,
-    value: '캐릭터 드로잉',
+    value: '캐릭터드로잉',
   },
   {
     id: 2,
@@ -23,23 +23,23 @@ export const CATEGORY_DATA_LIST_1 = [
 export const CATEGORY_DATA_LIST_2 = [
   {
     id: 1,
-    value: '대바늘 뜨개',
+    value: '대바늘뜨개',
   },
   {
     id: 2,
-    value: '도자기 공예',
+    value: '도자기공예',
   },
   {
     id: 3,
-    value: '실 공예',
+    value: '실공예',
   },
   {
     id: 4,
-    value: '라탄 공예',
+    value: '라탄공예',
   },
   {
     id: 5,
-    value: '가죽 공예',
+    value: '가죽공예',
   },
 ];
 
