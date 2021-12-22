@@ -107,20 +107,21 @@ const ProductDetail = () => {
   };
 
   const isLikeyOnHandler = () => {
-    fetch(`${API.DETAIL_PAGE}/${params.id}`, {
+    fetch(`${API.LIKE}`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('TOKEN'),
       },
       body: JSON.stringify({
-        is_like_True: !heart,
+        course_id: params.id,
       }),
     })
       .then(res => res.json())
       .then(res => {
-        if (res.message === 'SUCCESS') {
+        if (res.message === 'SUCCESS_LIKE') {
           setHeartRed(!heart);
         }
+        setHeartRed(!heart);
       });
   };
 
@@ -206,7 +207,7 @@ const ProductDetail = () => {
           <PriceContainer>
             <InstallmentPrice>할부 할인가</InstallmentPrice>
             <PriceWrap>
-              {discount_rate ? <Percent>{discount_rate}</Percent> : null}
+              {discount_rate ? <Percent>{discount_rate}%</Percent> : null}
               {price ? (
                 <Price>월 {Math.round(price * 100) / 100}원</Price>
               ) : null}
