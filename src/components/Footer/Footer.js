@@ -6,17 +6,17 @@ import usePathValid from '../hooks/usePathValid';
 import { kakaoBreakConnection } from '../../service/kakaoAPI';
 import styled from 'styled-components';
 
-const Footer = props => {
+const Footer = ({ isLogin, setIsLogin }) => {
   const { pathname } = useLocation();
 
-  const [isPathValid] = usePathValid(pathname);
+  const [isNavPathVaild] = usePathValid(pathname);
 
   const handleKakaoDisconnect = () => {
-    kakaoBreakConnection();
+    kakaoBreakConnection(setIsLogin);
   };
 
   return (
-    isPathValid && (
+    isNavPathVaild && (
       <FooterContainer>
         <FooterWrapper>
           <div>

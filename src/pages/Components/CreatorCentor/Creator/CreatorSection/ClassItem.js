@@ -19,8 +19,7 @@ const ClassItem = ({ projectData, onDeleteClass }) => {
     fetch(`${API.CLASS_COURSES}`, {
       method: 'DELETE',
       headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NDA2NDk3Njh9.Qw-eBDVLy9KeQp-ktnFyraRG1PQDpKR0_ZES2xVTIL8',
+        Authorization: localStorage.getItem('kakao_token'),
       },
       body: JSON.stringify({
         course_id: id,

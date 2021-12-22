@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import * as CreatorStyled from '../../../../../../../../styles/CreatorCentor/CreatorStyled';
 
-const ClassTitleForm = ({ register, errors, watch, ref }) => {
+const ClassTitleForm = ({ register, errors, watch }) => {
   const InputLengh = watch()?.classTitle?.length;
-  console.log(watch());
+
   return (
     <Container>
       <Input

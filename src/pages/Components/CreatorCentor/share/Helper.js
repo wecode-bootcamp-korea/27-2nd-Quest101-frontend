@@ -12,6 +12,9 @@ const HelperBox = () => (
       <Title>커버 이미지가 어디에 사용되나요?</Title>
     </TitleWapper>
     페이지 상단 커버 영역에 사용할 이미지 또는 영상을 1개 이상 추가해주세요.
+    <br />
+    <br />
+    4:3의 가로형 이미지를 추천합니다.
   </Container>
 );
 

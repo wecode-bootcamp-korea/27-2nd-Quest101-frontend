@@ -5,7 +5,7 @@ import { STAT_DATA } from '../../../../Collapsible/CollapsibleData';
 
 import * as CreatorStyled from '../../../../../../../../styles/CreatorCentor/CreatorStyled';
 
-const ClassStatForm = ({ register, errors, watch }) => {
+const ClassStatForm = ({ register }) => {
   return (
     <Container>
       <InputWrapper>

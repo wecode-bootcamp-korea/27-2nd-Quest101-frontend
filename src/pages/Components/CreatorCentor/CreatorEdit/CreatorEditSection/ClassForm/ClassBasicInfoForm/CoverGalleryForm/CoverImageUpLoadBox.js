@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
 
 import styled from 'styled-components';
-import { API } from '../../../../../../../../config';
+import HelperBox from '../../../../../share/Helper';
 
 export const CoverUpLoadBoxStyled = styled.div`
   flex: 1;
-  ${props => props.theme.flex('column', 'center', 'center')};
   position: relative;
   height: 260px;
   border: ${props => props.theme.borderGray};
@@ -15,107 +14,62 @@ export const CoverUpLoadBoxStyled = styled.div`
   background-position: center;
 `;
 
-const CoverImageUpLoadBox = ({ id, coverImage, register }) => {
-  const [thumbImage, setThumbImage] = useState(coverImage ?? '');
-  const mediaRef = useRef();
+const CoverImageUpLoadBox = ({ coverImage, register, setCoverImage }) => {
+  const [thumbImage, setThumbImage] = useState(
+    coverImage
+      ? coverImage.match(/haileysbucket+/)
+        ? `http://${coverImage}`
+        : coverImage
+      : '/images/photo-edit-cover.svg'
+  );
 
-  // const { ref, ...field } = register('file');
-
-  const handleInputClick = () => {
-    mediaRef.current.click();
-  };
+  const coverImageRef = useRef(null);
+  const { ref, ...rest } = register('coverImageRef');
 
   const handleUpLoadMedia = e => {
-    if (!!mediaRef.current.value) {
+    if (!!coverImageRef.current.value) {
       const srcURL = URL.createObjectURL(e.target.files[0]);
       const src = e.target.files[0];
       const type = e.target.files[0].type;
       setThumbImage(srcURL);
-
-      (async () => {
-        await fetch(`${API.CLASS_COURSES}/${id}`, {
-          method: 'POST',
-          headers: {
-            Authorization:
-              'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NDA2NDk3Njh9.Qw-eBDVLy9KeQp-ktnFyraRG1PQDpKR0_ZES2xVTIL8',
-          },
-          body: JSON.stringify({
-            thumbnail_image: src,
-            content_type: type,
-          }),
-        })
-          .then(res => res.json())
-          .then(result => {
-            if (result.MESSAGE === 'SUCCESS') {
-              setThumbImage(src);
-              alert('저장되었습니다.');
-            }
-          })
-          .catch(error => alert('이미지 저장에 실패했습니다.'));
-      })();
+      setCoverImage(prev => e.target.files[0]);
     }
   };
 
   return (
-    <CoverUpLoadBoxStyled onClick={handleInputClick} bgImage={thumbImage}>
-      <ThumbnailBasicBox
-        src="/images/photo-edit-cover.png"
+    <Container>
+      <CoverUpLoadBoxStyled
+        onClick={() => {
+          coverImageRef.current.click();
+        }}
+        bgImage={thumbImage}
         display={thumbImage ? 'none' : 'inline-block'}
-      />
-      <ImageInputButton
-        // {...field}
-        // mediaRef={ref}
-        {...register('classCoverImage')}
-        onChange={handleUpLoadMedia}
-        ref={mediaRef}
-      />
-      <UploadInfoWrapper display={thumbImage ? 'none' : 'inline-block'}>
-        <UploadInfo size="fontRegular" color="gray" weight="weightSemiBold">
-          이미지를 첨부해주세요.
-        </UploadInfo>
-        <UploadInfo size="fontMicro" color="gray">
-          4:3의 가로형 이미지를 추천합니다.
-        </UploadInfo>
-      </UploadInfoWrapper>
-    </CoverUpLoadBoxStyled>
+      >
+        <ImageInputButton
+          name="coverImageRef"
+          {...rest}
+          ref={e => {
+            ref(e);
+            coverImageRef.current = e;
+          }}
+          onChange={handleUpLoadMedia}
+        />
+      </CoverUpLoadBoxStyled>
+      <HelperBox />
+    </Container>
   );
 };
 
 export default CoverImageUpLoadBox;
-
-// Thumbnail
-const ThumbnailBasicImage = styled.img`
-  display: ${props => props.display};
-  width: 128px;
-  height: 128px;
-  margin: 32px;
-`;
-
-const ThumbnailBoxStyled = styled.div``;
-
-const ThumbnailBasicBox = ({ src, display }) => (
-  <ThumbnailBoxStyled>
-    <ThumbnailBasicImage src={src} display={display} />
-  </ThumbnailBoxStyled>
-);
-
-// ImageUpload
-const UploadInfo = styled.p`
-  margin-bottom: 8px;
-  color: ${props => props.theme[props.color]};
-  font-size: ${props => props.theme[props.size]};
-  font-weight: ${props => props.theme[props.weight]};
-`;
-
-const UploadInfoWrapper = styled.div`
-  display: ${props => props.display};
-  padding: 12px 0;
-  text-align: center;
-`;
 
 const ImageInputButton = styled.input.attrs({
   type: 'file',
   accept: 'image/*',
 })`
   display: none;
+  height: 100px;
+`;
+
+const Container = styled.div`
+  ${props => props.theme.flex('row', 'flex-start', 'space-between')};
 `;

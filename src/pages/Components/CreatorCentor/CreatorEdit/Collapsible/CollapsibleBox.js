@@ -6,14 +6,7 @@ import styled from 'styled-components';
 import { FormLabelStyled } from '../../../../../styles/CreatorCentor/CreatorStyled';
 
 const CollapsibleBox = ({ data, projectData }) => {
-  const {
-    label,
-    openedPalceholder,
-    closedPalceholder,
-    contents,
-    api,
-    sendData,
-  } = data;
+  const { label, openedPalceholder, closedPalceholder, contents } = data;
 
   const [isOpend, setIsOpend] = useState(false);
 
@@ -37,8 +30,6 @@ const CollapsibleBox = ({ data, projectData }) => {
           contents={contents}
           handleCloseContainer={handleCloseContainer}
           projectData={projectData}
-          api={api}
-          sendData={sendData}
         />
       ) : (
         <ClosedContents closedPalceholder={closedPalceholder} />

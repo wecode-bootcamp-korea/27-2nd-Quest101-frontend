@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '../../share/Button';
@@ -13,7 +13,7 @@ import ClassCreatorDetailForm from '../CreatorEditSection/ClassForm/ClassCreator
 import ClassStatForm from '../CreatorEditSection/ClassForm/ClassBasicInfoForm/ClassStatForm.js/ClassStatForm';
 import * as constData from './constData';
 
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { DescriptionStyled } from '../../../../../styles/CreatorCentor/CreatorStyled';
 import { API } from '../../../../../config';
 
@@ -22,73 +22,101 @@ const OpendContents = ({
   contents,
   handleCloseContainer,
   projectData,
-  sendData,
 }) => {
   const {
-    id,
-    name,
-    status,
-    user_phone_number,
-    user_name,
-    level,
-    healthStat,
-    intellectStat,
-    charmStat,
-    artStat,
-    user_description,
-    thumbnail_image_url,
-    description,
-    category,
+    class_id,
+    course_name,
+    course_description,
     sub_category,
-    coverGallery,
+    category,
+    course_level,
+    course_status,
+    user_name,
+    user_description,
+    user_phone_number,
+    health_stat,
+    intellect_stat,
+    charm_stat,
+    art_stat,
+    thumbnail_image_url,
+    detail_media,
   } = projectData;
 
-  const handleSubmitToBack = data => {
-    console.log(data);
+  const [coverMediaImages, setCoverMediaImages] = useState([]);
+  const [coverImage, setCoverImage] = useState([]);
 
-    const formData = new FormData();
-    const ImageDatas = new FormData();
+  const handleSubmitToBack = (data, e) => {
+    if (contents === 'CoverGalleryForm') {
+      const imageDatas = new FormData();
+      imageDatas.append('thumbnail_image_url', coverImage);
+      for (let i = 0; i < coverMediaImages.length; i++) {
+        imageDatas.append('detail_image_url', coverMediaImages[i]);
+      }
 
-    ImageDatas.append('file', 'fff');
-    ImageDatas.append('file', 'fff');
-    ImageDatas.append('file', 'fff');
-    ImageDatas.append('file', 'fff');
-    ImageDatas.append('file', 'fff');
-
-    console.log(ImageDatas.getAll('file'));
-
-    formData.append('course_id', id ?? null);
-    formData.append('course_name', data.classTitle ?? null);
-    formData.append('course_description', data.classDetail ?? null);
-    formData.append('category', data.classCategory ?? null);
-    formData.append('sub_category', data.classSubCategory);
-    formData.append('healthStat', data.classHealthStat ?? 0);
-    formData.append('intellectStat', data.classIntellectStat ?? 0);
-    formData.append('charmStat', data.classCharmStat ?? 0);
-    formData.append('artStat', data.classArtStat ?? 0);
-    formData.append('level', data.classLevel ?? 0);
-    formData.append('user_name', data.creatorNickName ?? null);
-    formData.append('user_phone_number', data.creatorPhone ?? null);
-    formData.append('user_description', data.creatorDetail ?? null);
-    formData.append('status', status ?? null);
-    formData.append('channel', '유튜브');
-    formData.append('url', null ?? null);
-
-    console.log(formData.getAll('course_description'));
-
-    fetch(API.CLASS_COURSES, {
-      method: 'POST',
-      headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NDA2NDk3Njh9.Qw-eBDVLy9KeQp-ktnFyraRG1PQDpKR0_ZES2xVTIL8',
-      },
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') alert('저장되었습니다.');
+      fetch(`${API.CLASS_COURSES}/${class_id}`, {
+        method: 'POST',
+        headers: {
+          Authorization: localStorage.getItem('kakao_token'),
+        },
+        body: imageDatas,
       })
-      .catch(error => alert('데이터 저장에 실패했습니다.'));
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') alert('저장되었습니다.');
+        })
+        .catch(error => alert('데이터 저장에 실패했습니다.'));
+
+      return;
+    } else {
+      const formData = new FormData();
+
+      if (contents === 'ClassCategoryForm') {
+        formData.append('category', data.classCategory);
+        formData.append('sub_category', data.classSubCategory);
+      }
+
+      if (contents === 'ClassStatForm') {
+        formData.append('health_stat', data.classHealthStat);
+        formData.append('intellect_stat', data.classIntellectStat);
+        formData.append('charm_stat', data.classCharmStat);
+        formData.append('art_stat', data.classArtStat);
+      }
+
+      const mappingKey = {
+        ClassTitleForm: 'course_name',
+        ClassCreatorNickNameForm: 'user_name',
+        ClassCreatorPhoneForm: 'user_phone_number',
+        ClassLevelForm: 'course_level',
+        ClassDetailInfoForm: 'course_description',
+        ClassCreatorDetailForm: 'user_description',
+      };
+
+      const mappingValue = {
+        ClassTitleForm: data.classTitle,
+        ClassCreatorNickNameForm: data.creatorNickName,
+        ClassCreatorPhoneForm: data.creatorPhone,
+        ClassLevelForm: data.classLevel,
+        ClassDetailInfoForm: data.classDetail,
+        ClassCreatorDetailForm: data.creatorDetail,
+      };
+
+      formData.append(mappingKey[contents], mappingValue[contents]);
+      formData.append('class_id', class_id);
+      formData.append('course_status', course_status);
+
+      fetch(API.CLASS_COURSES, {
+        method: 'POST',
+        headers: {
+          Authorization: localStorage.getItem('kakao_token'),
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') alert('저장되었습니다.');
+        })
+        .catch(error => alert('데이터 저장에 실패했습니다.'));
+    }
   };
 
   const {
@@ -98,37 +126,34 @@ const OpendContents = ({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      classTitle: name,
-      classCoverImage: null,
-      classCoverImage1: null,
-      classCoverImage2: null,
-      classCoverImage3: null,
+      classTitle: course_name,
       creatorNickName: user_name,
       creatorPhone: user_phone_number,
       classCategory: category,
       classSubCategory: sub_category,
-      classLevel: level,
-      classHealthStat: healthStat,
-      classIntellectStat: intellectStat,
-      classCharmStat: charmStat,
-      classArtStat: artStat,
-      classDetail: description,
+      classLevel: course_level,
+      classHealthStat: health_stat,
+      classIntellectStat: intellect_stat,
+      classCharmStat: charm_stat,
+      classArtStat: art_stat,
+      classDetail: course_description,
       creatorDetail: user_description,
     },
   });
 
   return (
     <Form onSubmit={handleSubmit(handleSubmitToBack)}>
-      <Description>{openedPalceholder}</Description>
+      <DescriptionStyled>{openedPalceholder}</DescriptionStyled>
       {(contents => {
         switch (contents) {
           case constData.COVER_GALLERY_FORM:
             return (
               <CoverGalleryForm
-                id={id}
-                register={register}
                 coverImage={thumbnail_image_url}
-                coverGallery={coverGallery}
+                detail_media={detail_media}
+                register={register}
+                setCoverMediaImages={setCoverMediaImages}
+                setCoverImage={setCoverImage}
               />
             );
           case constData.CLASS_TITLE_FORM:
@@ -141,11 +166,7 @@ const OpendContents = ({
             );
           case constData.CLASS_CREATOR_NICKNAME_FORM:
             return (
-              <ClassCreatorNickNameForm
-                register={register}
-                errors={errors}
-                watch={watch}
-              />
+              <ClassCreatorNickNameForm register={register} errors={errors} />
             );
           case constData.CLASS_CREATOR_PHONE_FORM:
             return (
@@ -164,21 +185,9 @@ const OpendContents = ({
               />
             );
           case constData.CLASS_LEVEL_FORM:
-            return (
-              <ClassLevelForm
-                register={register}
-                errors={errors}
-                watch={watch}
-              />
-            );
+            return <ClassLevelForm register={register} errors={errors} />;
           case constData.CLASS_STAT_FORM:
-            return (
-              <ClassStatForm
-                register={register}
-                errors={errors}
-                watch={watch}
-              />
-            );
+            return <ClassStatForm register={register} />;
           case constData.CLASS_DETAIL_INFO_FORM:
             return <ClassDetailInfoForm register={register} />;
           case constData.CLASS_CREATOR_DETAIL_FORM:
@@ -206,14 +215,29 @@ const OpendContents = ({
 
 export default OpendContents;
 
+const openAnimation = keyframes`
+  0% {
+    opacity:0;
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity:1;
+    transform: translateY(0);
+  }
+`;
+
 const Buttons = styled.div`
   margin-top: 24px;
   border-radius: 4px;
   text-align: right;
 `;
 
-const Description = styled(DescriptionStyled)``;
-
 const Form = styled.form`
   width: 100%;
+  animation: ${openAnimation} 150ms cubic-bezier(1, -0.01, 0.58, 1);
 `;
