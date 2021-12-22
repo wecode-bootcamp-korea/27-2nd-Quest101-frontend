@@ -5,9 +5,15 @@ import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
 import { AiOutlineConsoleSql, AiOutlineSearch } from 'react-icons/ai';
 import { kakaoLogingOut } from '../../service/kakaoAPI';
+import NavCategory from './NavCategory';
 
-const Nav = ({ isLogin, setIsLogin }) => {
+const Nav = () => {
   const { pathname } = useLocation();
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem('kakao_token') ? setIsLogin(true) : setIsLogin(false);
+  }, []);
 
   const [isNavPathVaild] = usePathValid(pathname);
 
@@ -38,6 +44,7 @@ const Nav = ({ isLogin, setIsLogin }) => {
           </Link>
           <Link to="/">{isLogin ? <UserImage /> : null}</Link>
         </Header>
+        <NavCategory />
       </HeaderContainer>
     )
   );

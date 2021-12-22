@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LikeButton from './LikeButton/LikeButton';
-import styled from 'styled-components';
+import { API } from '../../config';
+import HeartButton from './HeartButton/HeartButton';
 import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
+import styled from 'styled-components';
 
 const ProductCardItem = ({ productCardInfo }) => {
-  const [like, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(false);
+  const [like, setLike] = useState(productCardInfo.is_like_True);
 
-  const handleLike = () => {
-    setLike(!like);
-    setLikeCount(number => (like ? number - 1 : number + 1));
+  const isLikeyOnNumber = like
+    ? productCardInfo.course_like + 1
+    : productCardInfo.course_like;
+
+  const isLikeyOnHandler = () => {
+    fetch(`${API.LIKE}`, {
+      method: 'POST',
+      headers: {
+        Authorization: localStorage.getItem('TOKEN'),
+      },
+      body: JSON.stringify({
+        course_id: productCardInfo.course_id,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.message === 'SUCCESS_LIKE') {
+          setLike(prev => !prev);
+        }
+        if (res.message === 'DELETE_LIKE') {
+          setLike(prev => !prev);
+        }
+      });
   };
 
   return (
@@ -19,11 +39,14 @@ const ProductCardItem = ({ productCardInfo }) => {
         <Link to={`/detail/${productCardInfo.course_id}`}>
           <Thumbnail src={productCardInfo.thumbnail} />
         </Link>
-        <LikeButtonWrapper onClick={handleLike}>
-          <LikeButton
-            icon={like ? <LikeIcon /> : <DisLikeIcon />}
-            onClick={handleLike}
-          />
+        <LikeButtonWrapper>
+          <label>
+            <HeartButtonCheckbox onClick={isLikeyOnHandler} />
+            <HeartButton
+              icon={like ? <LikeIcon /> : <DisLikeIcon />}
+              onClick={isLikeyOnHandler}
+            />
+          </label>
         </LikeButtonWrapper>
       </ThumbnailWrapper>
       <Link to={`/detail/${productCardInfo.course_id}`}>
@@ -32,7 +55,7 @@ const ProductCardItem = ({ productCardInfo }) => {
           <CourseName>{productCardInfo.course_name}</CourseName>
           <LikeCountWrapper>
             <LikeCountIcon />
-            <LikeCount>{likeCount}</LikeCount>
+            <LikeCount>{isLikeyOnNumber ? isLikeyOnNumber : ''}</LikeCount>
           </LikeCountWrapper>
           <PriceWrapper>
             <RateDiscount>{productCardInfo.discount_rate}</RateDiscount>
@@ -67,12 +90,15 @@ const LikeButtonWrapper = styled.button`
   right: 20px;
   z-index: 1;
 `;
+
 const LikeIcon = styled(HiHeart)`
   color: red;
   font-size: 24px;
 `;
+
 const DisLikeIcon = styled(HiOutlineHeart)`
   font-size: 24px;
+  color: ${props => props.theme.white};
 `;
 
 const ThumbnailWrapper = styled.div`
@@ -127,4 +153,10 @@ const Price = styled.p`
 const PaymentPeriod = styled.p`
   font-size: ${props => props.theme.fontMicro};
   color: ${props => props.theme.gray};
+`;
+
+const HeartButtonCheckbox = styled.input.attrs({
+  type: 'checkbox',
+})`
+  display: none;
 `;

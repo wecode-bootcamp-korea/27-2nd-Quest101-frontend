@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ProductCardList from '../../components/ProductCard/ProductCardList';
-import SimpleSlider from './SimpleSlider';
 import { API } from '../../config';
 import styled from 'styled-components';
 
-const QUERY_STRING = ['?stat=체력', '?stat=지능', '?stat=매력', '?stat=예술'];
+const QUERY_STRING = ['&stat=체력', '&stat=지능', '&stat=매력', '&stat=예술'];
 
-const ProductList = () => {
+const ProductListCategory = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [productCardList, setProductCardList] = useState({});
-  const [stat, setStat] = useState('');
 
   const [statBtn, setStatBtn] = useState({
     first: false,
@@ -22,23 +23,16 @@ const ProductList = () => {
     setStatBtn(prev => ({ [buttonNum]: !prev[buttonNum] }));
   };
 
-  const handleDataChange = query => {
-    setStat(query);
-  };
-
   useEffect(() => {
-    fetch(`${API.LIST}${stat}`, {
-      headers: { Authorization: localStorage.getItem('TOKEN') },
-    })
+    fetch(`${API.LIST}${location.search}`)
       .then(res => res.json())
       .then(res => setProductCardList(res.results));
-  }, [stat]);
+  }, [location.search]);
 
   return (
     <div>
       {productCardList.length > 0 && (
         <>
-          <SimpleSlider />
           <Link to="/creator">
             <BeltBanner>
               <BeltBannerText>퀘스트 101 </BeltBannerText>
@@ -53,7 +47,7 @@ const ProductList = () => {
               selected={statBtn.first}
               onClick={() => {
                 hadleChangeBtnColor('first');
-                handleDataChange(QUERY_STRING[0]);
+                navigate(location.search + QUERY_STRING[0]);
               }}
             >
               체력
@@ -63,7 +57,7 @@ const ProductList = () => {
               selected={statBtn.second}
               onClick={() => {
                 hadleChangeBtnColor('second');
-                handleDataChange(QUERY_STRING[1]);
+                navigate(location.search + QUERY_STRING[1]);
               }}
             >
               지능
@@ -73,7 +67,7 @@ const ProductList = () => {
               selected={statBtn.third}
               onClick={() => {
                 hadleChangeBtnColor('third');
-                handleDataChange(QUERY_STRING[2]);
+                navigate(location.search + QUERY_STRING[2]);
               }}
             >
               매력
@@ -83,7 +77,7 @@ const ProductList = () => {
               selected={statBtn.fourth}
               onClick={() => {
                 hadleChangeBtnColor('fourth');
-                handleDataChange(QUERY_STRING[3]);
+                navigate(location.search + QUERY_STRING[3]);
               }}
             >
               예술
@@ -98,7 +92,7 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductListCategory;
 
 const BeltBanner = styled.div`
   position: relative;
