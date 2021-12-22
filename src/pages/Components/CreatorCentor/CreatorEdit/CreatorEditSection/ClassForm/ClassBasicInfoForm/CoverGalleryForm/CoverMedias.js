@@ -3,25 +3,27 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { Button } from '../../../../../share/Button';
 import { Icon } from '../../../../../share/Icon';
-import CoverMediaUpLoadBox from './CoverUpLoadBox';
+import MediaUpLoadBox from './MediaUpLoadBox';
 
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
 
-const CoverMedias = ({ coverGallery, register }) => {
-  const [coverMediaArray, setCoverMediaArray] = useState([1, 2, 3]);
+const CoverMedias = ({ detail_media, register, setCoverMediaImages }) => {
+  const [coverMediaArray, setCoverMediaArray] = useState(
+    detail_media?.length >= 3
+      ? detail_media.map((_, i) => `${i}`)
+      : ['0', '1', '2']
+  );
+
+  console.log(coverMediaArray);
 
   const handleAddCoverMedia = () => {
     setCoverMediaArray(prev => {
       const newArray = [...prev];
-      newArray.push(prev[prev.length - 1] + 1);
+      newArray.push('' + (Number(prev[prev.length - 1]) + 1));
       return newArray;
     });
   };
-
-  // const handleInputClick = () => {
-  //   mediaRef.current.click();
-  // };
 
   const handleDragEnd = ({ draggableId, destination, source }) => {
     if (!destination) return;
@@ -52,16 +54,12 @@ const CoverMedias = ({ coverGallery, register }) => {
                         {...provided.dragHandleProps}
                         key={id}
                       >
-                        <BoxContainer>
-                          <Input
-                            {...register(`classMediaImage${index}`)}
-                            type="file"
-                            accept="image/*"
-                          ></Input>
-                        </BoxContainer>
-                        {/* <CoverMediaUpLoadBox
-                          coverMedia={coverGallery && coverGallery[index]}
-                        /> */}
+                        <MediaUpLoadBox
+                          coverMedia={detail_media && detail_media[index]}
+                          register={register}
+                          index={index}
+                          setCoverMediaImages={setCoverMediaImages}
+                        />
                       </CoverUpLoadItem>
                     )}
                   </Draggable>
@@ -77,6 +75,7 @@ const CoverMedias = ({ coverGallery, register }) => {
         bgColor="lightGray"
         fullwidth
         onClick={handleAddCoverMedia}
+        type="button"
       >
         <Icon iconName={AiOutlinePlus} size={12} margin="0 4px 0 0" />
         커버 추가하기
@@ -91,18 +90,10 @@ const CoverMediaContainer = styled.div`
 `;
 
 const CoverUpLoadItem = styled.li`
-  margin-right: 20px;
   margin-bottom: 20px;
-
-  &:nth-child(3n) {
-    margin-right: 0;
-  }
 `;
 
-const CoverUpLoadList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
+const CoverUpLoadList = styled.ul``;
 
 const Input = styled.input`
   width: 100px;

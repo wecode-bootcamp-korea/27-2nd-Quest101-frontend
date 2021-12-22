@@ -20,8 +20,7 @@ const CreatorSection = () => {
     (async () => {
       const response = await fetch(API.CLASS_COURSES, {
         headers: {
-          Authorization:
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NDA2NDk3Njh9.Qw-eBDVLy9KeQp-ktnFyraRG1PQDpKR0_ZES2xVTIL8',
+          Authorization: localStorage.getItem('kakao_token'),
         },
       });
       const json = await response.json();
@@ -36,7 +35,7 @@ const CreatorSection = () => {
   //     const response = await fetch('/data/creatorClassListMockdata.json', {
   //       headers: {
   //         Authorization:
-  //           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NDA2NDk3Njh9.Qw-eBDVLy9KeQp-ktnFyraRG1PQDpKR0_ZES2xVTIL8',
+  //           localStorage.getItem('kakao_token'),
   //       },
   //     });
   //     const json = await response.json();
@@ -53,10 +52,9 @@ const CreatorSection = () => {
 
   const handleAddClass = () => {
     fetch(API.CLASS_COURSES, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NDA2NDk3Njh9.Qw-eBDVLy9KeQp-ktnFyraRG1PQDpKR0_ZES2xVTIL8',
+        Authorization: localStorage.getItem('kakao_token'),
       },
     })
       .then(res => res.json())

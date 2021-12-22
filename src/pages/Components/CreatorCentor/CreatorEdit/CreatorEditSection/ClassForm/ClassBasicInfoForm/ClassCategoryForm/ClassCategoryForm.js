@@ -4,6 +4,7 @@ import * as CreatorStyled from '../../../../../../../../styles/CreatorCentor/Cre
 
 const ClassCategoryForm = ({ register, errors, watch }) => {
   const selectCategory = watch().classCategory;
+
   return (
     <Container>
       <Label for="classCategory">카테고리</Label>
@@ -23,7 +24,7 @@ const ClassCategoryForm = ({ register, errors, watch }) => {
         switch (selectCategory) {
           case '디지털 드로잉':
             return (
-              <Select {...register('classSubCategory')} name="classCategory">
+              <Select {...register('classSubCategory')} name="classSubCategory">
                 <option value="" hidden selected disabled>
                   2차 카테고리를 선택해주세요.
                 </option>
@@ -36,17 +37,17 @@ const ClassCategoryForm = ({ register, errors, watch }) => {
             );
           case '재테크':
             return (
-              <Select {...register('classSubCategory')} name="classCategory">
+              <Select {...register('classSubCategory')} name="classSubCategory">
                 <option value="" hidden selected disabled>
                   2차 카테고리를 선택해주세요.
                 </option>
                 <option value="주식">주식</option>
-                <option value="부동산 드로잉">부동산</option>
+                <option value="부동산">부동산</option>
               </Select>
             );
           case '공예':
             return (
-              <Select {...register('classSubCategory')} name="classCategory">
+              <Select {...register('classSubCategory')} name="classSubCategory">
                 <option value="" hidden selected disabled>
                   2차 카테고리를 선택해주세요.
                 </option>
@@ -59,7 +60,7 @@ const ClassCategoryForm = ({ register, errors, watch }) => {
             );
           case '운동':
             return (
-              <Select {...register('classSubCategory')} name="classCategory">
+              <Select {...register('classSubCategory')} name="classSubCategory">
                 <option value="" hidden selected disabled>
                   2차 카테고리를 선택해주세요.
                 </option>
@@ -73,7 +74,7 @@ const ClassCategoryForm = ({ register, errors, watch }) => {
             );
           case '개발/데이터':
             return (
-              <Select {...register('classSubCategory')} name="classCategory">
+              <Select {...register('classSubCategory')} name="classSubCategory">
                 <option value="" hidden selected disabled>
                   2차 카테고리를 선택해주세요.
                 </option>
@@ -86,7 +87,7 @@ const ClassCategoryForm = ({ register, errors, watch }) => {
             );
           case '요리':
             return (
-              <Select {...register('classSubCategory')} name="classCategory">
+              <Select {...register('classSubCategory')} name="classSubCategory">
                 <option value="" hidden selected disabled>
                   2차 카테고리를 선택해주세요.
                 </option>

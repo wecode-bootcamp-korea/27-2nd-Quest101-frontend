@@ -25,10 +25,12 @@ const Router = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/creator" element={<Creator />} />
         <Route path="/creator/:id/edit" element={<CreatorEdit />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route
+          path="/login"
+          element={<Login isLogin={isLogin} setIsLogin={setIsLogin} />}
+        />
       </Routes>
-      <Footer />
+      <Footer isLogin={isLogin} setIsLogin={setIsLogin} />
     </BrowserRouter>
   );
 };

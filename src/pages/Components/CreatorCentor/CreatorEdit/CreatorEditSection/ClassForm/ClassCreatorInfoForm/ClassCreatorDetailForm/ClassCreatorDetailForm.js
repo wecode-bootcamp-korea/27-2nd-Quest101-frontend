@@ -5,7 +5,7 @@ import * as CreatorStyled from '../../../../../../../../styles/CreatorCentor/Cre
 const ClassCreatorDetailForm = ({ register }) => {
   return (
     <Container>
-      <Input {...register('creatorDetail')} placeholder="작가님 소개"></Input>
+      <Input {...register('creatorDetail')} placeholder="작가님 소개" />
     </Container>
   );
 };

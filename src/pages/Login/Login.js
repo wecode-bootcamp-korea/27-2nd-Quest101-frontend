@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { kakaoLogin } from '../../service/kakaoAPI';
 
-const Login = () => {
+const Login = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
 
   const handleKakaoLogin = () => {
     kakaoLogin(navigate, setIsLogin);
