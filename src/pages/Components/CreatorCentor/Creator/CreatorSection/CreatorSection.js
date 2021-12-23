@@ -5,7 +5,7 @@ import ClassList from './ClassList';
 import styled from 'styled-components';
 import * as CreatorStyled from '../../../../../styles/CreatorCentor/CreatorStyled';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { API } from '../../../../../config';
+import { API_JUNGHUN } from '../../../../../config';
 
 import { Button } from '../../share/Button';
 import { Icon } from '../../share/Icon';
@@ -18,7 +18,7 @@ const CreatorSection = () => {
   //백엔드 통신용
   useEffect(() => {
     (async () => {
-      const response = await fetch(API.CLASS_COURSES, {
+      const response = await fetch(API_JUNGHUN.CLASS_COURSES, {
         headers: {
           Authorization: localStorage.getItem('kakao_token'),
         },
@@ -51,7 +51,7 @@ const CreatorSection = () => {
   };
 
   const handleAddClass = () => {
-    fetch(API.CLASS_COURSES, {
+    fetch(API_JUNGHUN.CLASS_COURSES, {
       method: 'PUT',
       headers: {
         Authorization: localStorage.getItem('kakao_token'),

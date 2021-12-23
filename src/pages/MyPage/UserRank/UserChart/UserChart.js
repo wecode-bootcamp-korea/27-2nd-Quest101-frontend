@@ -9,9 +9,9 @@ import {
 import { Bar } from 'react-chartjs-2';
 // import faker from 'faker';
 import styled from 'styled-components';
+import { zh_TW } from 'faker/lib/locales';
 
-const Chart = props => {
-  const { status } = props;
+const Chart = ({ stats }) => {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
   const labels = [''];
   const options = {
@@ -24,22 +24,22 @@ const Chart = props => {
     datasets: [
       {
         label: '체력',
-        data: labels.map(() => (status.status[0] ? status.status[0].str : 0)),
+        data: labels.map(() => 55),
         backgroundColor: 'rgba(255,255, 255, 0.5)',
       },
       {
         label: '지능',
-        data: labels.map(() => (status.status[0] ? status.status[0].int : 0)),
+        data: labels.map(() => 20),
         backgroundColor: 'rgba(255,255, 255, 0.5)',
       },
       {
         label: '매력',
-        data: labels.map(() => (status.status[0] ? status.status[0].dex : 0)),
+        data: labels.map(() => 30),
         backgroundColor: 'rgba(255,255, 255, 0.5)',
       },
       {
         label: '예술',
-        data: labels.map(() => (status.status[0] ? status.status[0].luk : 0)),
+        data: labels.map(() => 30),
         backgroundColor: 'rgba(255,255, 255, 0.5)',
       },
     ],

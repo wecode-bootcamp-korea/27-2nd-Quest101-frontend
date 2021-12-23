@@ -1,12 +1,10 @@
 import React from 'react';
 import ProductCardItem from './ProductCardItem';
 
-const ProductCardList = props => {
-  const { productCardList } = props;
-
+const ProductCardList = ({ productCardList }) => {
   return (
     <>
-      {productCardList.map(productCardInfo => (
+      {productCardList?.map(productCardInfo => (
         <ProductCardItem
           key={productCardInfo.id}
           productCardInfo={productCardInfo}

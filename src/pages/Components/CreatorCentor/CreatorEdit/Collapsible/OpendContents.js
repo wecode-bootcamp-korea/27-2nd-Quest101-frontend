@@ -15,7 +15,7 @@ import * as constData from './constData';
 
 import styled, { keyframes } from 'styled-components';
 import { DescriptionStyled } from '../../../../../styles/CreatorCentor/CreatorStyled';
-import { API } from '../../../../../config';
+import { API, API_JUNGHUN } from '../../../../../config';
 
 const OpendContents = ({
   openedPalceholder,
@@ -24,22 +24,24 @@ const OpendContents = ({
   projectData,
 }) => {
   const {
-    class_id,
-    course_name,
-    course_description,
-    sub_category,
-    category,
-    course_level,
-    course_status,
-    user_name,
-    user_description,
-    user_phone_number,
-    health_stat,
-    intellect_stat,
-    charm_stat,
-    art_stat,
+    id,
+    name,
     thumbnail_image_url,
     detail_media,
+    description,
+    sub_category,
+    category,
+    healthStat,
+    intellectStat,
+    charmStat,
+    artStat,
+    status,
+    level,
+    user_name,
+    user_profile_image,
+    user_phone_number,
+    user_description,
+    social_account,
   } = projectData;
 
   const [coverMediaImages, setCoverMediaImages] = useState([]);
@@ -53,7 +55,7 @@ const OpendContents = ({
         imageDatas.append('detail_image_url', coverMediaImages[i]);
       }
 
-      fetch(`${API.CLASS_COURSES}/${class_id}`, {
+      fetch(`${API_JUNGHUN.CLASS_COURSES}/${id}`, {
         method: 'POST',
         headers: {
           Authorization: localStorage.getItem('kakao_token'),
@@ -86,7 +88,7 @@ const OpendContents = ({
         ClassTitleForm: 'course_name',
         ClassCreatorNickNameForm: 'user_name',
         ClassCreatorPhoneForm: 'user_phone_number',
-        ClassLevelForm: 'course_level',
+        ClassLevelForm: 'level',
         ClassDetailInfoForm: 'course_description',
         ClassCreatorDetailForm: 'user_description',
       };
@@ -101,10 +103,9 @@ const OpendContents = ({
       };
 
       formData.append(mappingKey[contents], mappingValue[contents]);
-      formData.append('class_id', class_id);
-      formData.append('course_status', course_status);
+      formData.append('class_id', id);
 
-      fetch(API.CLASS_COURSES, {
+      fetch(`${API_JUNGHUN.CLASS_COURSES}`, {
         method: 'POST',
         headers: {
           Authorization: localStorage.getItem('kakao_token'),
@@ -126,17 +127,17 @@ const OpendContents = ({
     formState: { errors },
   } = useForm({
     defaultValues: {
-      classTitle: course_name,
+      classTitle: name,
       creatorNickName: user_name,
       creatorPhone: user_phone_number,
       classCategory: category,
       classSubCategory: sub_category,
-      classLevel: course_level,
-      classHealthStat: health_stat,
-      classIntellectStat: intellect_stat,
-      classCharmStat: charm_stat,
-      classArtStat: art_stat,
-      classDetail: course_description,
+      classLevel: level,
+      classHealthStat: healthStat,
+      classIntellectStat: intellectStat,
+      classCharmStat: charmStat,
+      classArtStat: artStat,
+      classDetail: description,
       creatorDetail: user_description,
     },
   });
@@ -166,7 +167,11 @@ const OpendContents = ({
             );
           case constData.CLASS_CREATOR_NICKNAME_FORM:
             return (
-              <ClassCreatorNickNameForm register={register} errors={errors} />
+              <ClassCreatorNickNameForm
+                register={register}
+                errors={errors}
+                watch={watch}
+              />
             );
           case constData.CLASS_CREATOR_PHONE_FORM:
             return (
