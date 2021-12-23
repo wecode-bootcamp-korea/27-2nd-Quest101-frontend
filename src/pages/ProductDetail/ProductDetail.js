@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const params = useParams();
   const [comment, setComment] = useState('');
   const [creatorInfo, setCreatorInfo] = useState({});
-  const [heart, setHeartRed] = useState(false);
+  const [heart, setHeartRed] = useState();
   const [commentArray, setCommentArray] = useState([
     {
       id: 0,
@@ -25,6 +25,32 @@ const ProductDetail = () => {
       content: '',
     },
   ]);
+
+  useEffect(() => {
+    fetch(`${API.DETAIL_PAGE}/${params.id}`, {
+      headers: {
+        Authorization: localStorage.getItem('TOKEN'),
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        setCreatorInfo(data.results);
+        setHeartRed(data.results.is_like_True);
+      });
+  }, [params.id]);
+
+  useEffect(() => {
+    fetch(`${API.PRODUCTS}/${params.id}/comments`)
+      .then(res => res.json())
+      .then(data => {
+        setCommentArray(data.result);
+      });
+  }, [params.id]);
+
+  const commentAdditional = e => {
+    const { value } = e.target;
+    setComment(value);
+  };
 
   const {
     sub_category,
@@ -38,38 +64,16 @@ const ProductDetail = () => {
     course_like,
     profile,
     description,
-    // is_like_True,
   } = creatorInfo;
 
   const isLikeyOnNumber = heart ? course_like + 1 : course_like;
-
-  useEffect(() => {
-    fetch(`${API.DETAIL_PAGE}/${params.id}`)
-      .then(res => res.json())
-      .then(data => {
-        setCreatorInfo(data.results);
-      });
-  }, [params.id]);
-
-  useEffect(() => {
-    fetch(`${API.COMMENT}/${params.id}`)
-      .then(res => res.json())
-      .then(data => {
-        setCommentArray(data.result);
-      });
-  }, [params.id]);
-
-  const commentAdditional = e => {
-    const { value } = e.target;
-    setComment(value);
-  };
 
   const onSubmitUserComment = e => {
     e.preventDefault();
     if (comment === '') {
       return;
     }
-    fetch(`${API.COMMENT}/${params.id}`, {
+    fetch(`${API.PRODUCTS}/${params.id}/comments`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('TOKEN'),
@@ -86,7 +90,7 @@ const ProductDetail = () => {
   };
 
   const onRemoveComment = id => {
-    fetch(`${API.COMMENT}/${params.id}`, {
+    fetch(`${API.PRODUCTS}/${params.id}/comments`, {
       method: 'DELETE',
       headers: {
         Authorization: localStorage.getItem('TOKEN'),
@@ -107,25 +111,28 @@ const ProductDetail = () => {
   };
 
   const isLikeyOnHandler = () => {
-    fetch(`${API.DETAIL_PAGE}/${params.id}`, {
+    fetch(`${API.LIKE}`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('TOKEN'),
       },
       body: JSON.stringify({
-        is_like_True: !heart,
+        course_id: params.id,
       }),
     })
       .then(res => res.json())
       .then(res => {
-        if (res.message === 'SUCCESS') {
-          setHeartRed(!heart);
+        if (res.message === 'SUCCESS_LIKE') {
+          setHeartRed(prev => !prev);
+        }
+        if (res.message === 'DELETE_LIKE') {
+          setHeartRed(prev => !prev);
         }
       });
   };
 
   const addToCart = () => {
-    fetch(`${API.DETAIL_PAGE}/${params.id}`, {
+    fetch(`${API.PRODUCTS}/${params.id}/order`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('TOKEN'),
@@ -206,7 +213,7 @@ const ProductDetail = () => {
           <PriceContainer>
             <InstallmentPrice>할부 할인가</InstallmentPrice>
             <PriceWrap>
-              {discount_rate ? <Percent>{discount_rate}</Percent> : null}
+              {discount_rate ? <Percent>{discount_rate}%</Percent> : null}
               {price ? (
                 <Price>월 {Math.round(price * 100) / 100}원</Price>
               ) : null}
