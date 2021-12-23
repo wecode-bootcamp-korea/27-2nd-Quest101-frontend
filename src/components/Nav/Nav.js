@@ -3,13 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import usePathValid from '../hooks/usePathValid';
 import styled from 'styled-components';
 import { HiOutlineHeart } from 'react-icons/hi';
-import { AiOutlineConsoleSql, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { kakaoLogingOut } from '../../service/kakaoAPI';
 import NavCategory from './NavCategory';
 
-const Nav = () => {
+const Nav = ({ isLogin, setIsLogin }) => {
   const { pathname } = useLocation();
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     localStorage.getItem('kakao_token') ? setIsLogin(true) : setIsLogin(false);
@@ -37,14 +36,20 @@ const Nav = () => {
             <DarkMode>다크모드</DarkMode>
           </Link>
           <Link to="/">
-            <LogOut onClick={handleKakaoLogout}>로그아웃</LogOut>
-          </Link>
-          <Link to="/">
             <Likey />
           </Link>
-          <Link to="/">{isLogin ? <UserImage /> : null}</Link>
+          {isLogin ? (
+            <>
+              <LogOut onClick={handleKakaoLogout}>로그아웃</LogOut>
+              <Link to="/mypage">
+                <UserImage />
+              </Link>
+            </>
+          ) : (
+            <Link to="/login">로그인</Link>
+          )}
         </Header>
-        <NavCategory />
+        <NavCategory isLogin={isLogin} />
       </HeaderContainer>
     )
   );

@@ -8,7 +8,7 @@ import * as CreatorStyled from '../../../../../styles/CreatorCentor/CreatorStyle
 import { Button } from '../../share/Button';
 import { Icon } from '../../share/Icon';
 import { AiFillDelete } from 'react-icons/ai';
-import { API } from '../../../../../config';
+import { API_JUNGHUN } from '../../../../../config';
 
 const ClassItem = ({ projectData, onDeleteClass }) => {
   const { id, thumbnail_image_url, status, name } = projectData;
@@ -16,7 +16,7 @@ const ClassItem = ({ projectData, onDeleteClass }) => {
   const handleDeleteClass = (e, id) => {
     e.preventDefault();
 
-    fetch(`${API.CLASS_COURSES}`, {
+    fetch(API_JUNGHUN.CLASS_COURSES, {
       method: 'DELETE',
       headers: {
         Authorization: localStorage.getItem('kakao_token'),

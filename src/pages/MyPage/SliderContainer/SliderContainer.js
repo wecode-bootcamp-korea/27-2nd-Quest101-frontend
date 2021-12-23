@@ -7,10 +7,9 @@ import {
   MdOutlineKeyboardArrowLeft,
 } from 'react-icons/md';
 
-const SliderContainer = props => {
+const SliderContainer = ({ productCardList }) => {
   const IMAGE_TRANSLATE_X = 262;
   const [index, setIndex] = useState(0);
-  const { productCardList } = props;
 
   const slideRef = useRef(null);
 
@@ -52,7 +51,6 @@ const SliderContainer = props => {
 };
 
 const Container = styled.div`
-  width: 786px;
   display: flex;
   flex-direction: column;
   transition: transform 0.6s;

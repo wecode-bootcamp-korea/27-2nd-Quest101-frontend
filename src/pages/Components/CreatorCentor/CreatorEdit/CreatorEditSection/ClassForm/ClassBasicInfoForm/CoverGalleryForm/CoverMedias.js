@@ -15,8 +15,6 @@ const CoverMedias = ({ detail_media, register, setCoverMediaImages }) => {
       : ['0', '1', '2']
   );
 
-  console.log(coverMediaArray);
-
   const handleAddCoverMedia = () => {
     setCoverMediaArray(prev => {
       const newArray = [...prev];

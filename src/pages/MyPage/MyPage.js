@@ -4,6 +4,7 @@ import SliderContainer from './SliderContainer/SliderContainer';
 
 import styled from 'styled-components';
 import { SiMessenger } from 'react-icons/si';
+import { API } from '../../config';
 
 const MyPage = () => {
   const [status, setStatus] = useState({});
@@ -20,30 +21,36 @@ const MyPage = () => {
   }, []);
 
   useEffect(() => {
-    fetch('/data/mypageData.json')
+    fetch(API.MYPAGE, {
+      headers: {
+        Authorization: localStorage.getItem('kakao_token'),
+      },
+    })
       .then(res => res.json())
-      .then(data => setStatus(data));
+      .then(data => setStatus(data.result));
   }, []);
+
+  const name = status?.user_stat?.name;
+  const { like_course, running_course, user_stat } = status;
 
   return (
     <MyPageContainer>
       <UserWrap>
         <UserWrapFlex>
-          <UserName>{status[1] ? status[1].user : ''}</UserName>
+          <UserName>{name}</UserName>
           <UserMessageIcon />
         </UserWrapFlex>
-        <UserEmail>{status[1] ? status[1].email : ''}</UserEmail>
       </UserWrap>
       <DisplayFlex>
-        <UserRank status={status} />
+        <UserRank stats={user_stat} />
         <UserHistoryWrap>
           <UserWishListContainer>
             <WishListTitle>찜한 상품</WishListTitle>
-            <SliderContainer productCardList={productCardList} />
+            <SliderContainer productCardList={like_course} />
           </UserWishListContainer>
           <PurchaseListContainer>
             <PurchaseListTitle>구매 목록</PurchaseListTitle>
-            <SliderContainer productCardList={purchaseList} />
+            <SliderContainer productCardList={running_course} />
           </PurchaseListContainer>
         </UserHistoryWrap>
       </DisplayFlex>

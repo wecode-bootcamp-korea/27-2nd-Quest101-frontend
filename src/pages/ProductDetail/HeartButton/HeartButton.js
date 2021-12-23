@@ -13,7 +13,6 @@ const HeartButton = props => {
 
 const HeartButtonContainer = styled.div`
   ${props => props.theme.flex('row', 'center', 'center')};
-  width: 80px;
   height: 40px;
   padding: 0px 20px 0px 20px;
   border-radius: 3px;

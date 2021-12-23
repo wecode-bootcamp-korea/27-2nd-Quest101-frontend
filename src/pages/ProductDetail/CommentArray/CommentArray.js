@@ -14,21 +14,22 @@ const CommentArrayContainer = props => {
 
   return (
     <ul>
-      {commentArray.map(user => {
-        return (
-          <CommentContainer key={user.id}>
-            <CommentWrap>
-              <CommentUserProfile />
-              <div>
-                <CommentUser>{user.name}</CommentUser>
-                <CommentDate>{commentDateValue}</CommentDate>
-              </div>
-              <Comment>{user.content}</Comment>
-            </CommentWrap>
-            <RemoveComment onClick={() => onRemoveComment(user.id)} />
-          </CommentContainer>
-        );
-      })}
+      {commentArray.length > 0 &&
+        commentArray.map(user => {
+          return (
+            <CommentContainer key={user.id}>
+              <CommentWrap>
+                <CommentUserProfile />
+                <div>
+                  <CommentUser>{user.name}</CommentUser>
+                  <CommentDate>{commentDateValue}</CommentDate>
+                </div>
+                <Comment>{user.content}</Comment>
+              </CommentWrap>
+              <RemoveComment onClick={() => onRemoveComment(user.id)} />
+            </CommentContainer>
+          );
+        })}
     </ul>
   );
 };

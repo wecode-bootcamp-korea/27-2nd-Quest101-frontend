@@ -12,8 +12,9 @@ import { GiHeartPlus, GiBookCover, GiCharm } from 'react-icons/gi';
 import { FaPaintBrush } from 'react-icons/fa';
 import { GrShare } from 'react-icons/gr';
 import CommentArrayContainer from './CommentArray/CommentArray';
+import Login from '../Login/Login';
 
-const ProductDetail = () => {
+const ProductDetail = ({ isLogin }) => {
   const params = useParams();
   const [comment, setComment] = useState('');
   const [creatorInfo, setCreatorInfo] = useState({});
@@ -27,16 +28,23 @@ const ProductDetail = () => {
   ]);
 
   useEffect(() => {
-    fetch(`${API.DETAIL_PAGE}/${params.id}`, {
-      headers: {
-        Authorization: localStorage.getItem('TOKEN'),
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        setCreatorInfo(data.results);
-        setHeartRed(data.results.is_like_True);
-      });
+    isLogin
+      ? fetch(`${API.DETAIL_PAGE}/${params.id}`, {
+          headers: {
+            Authorization: localStorage.getItem('kakao_token'),
+          },
+        })
+          .then(res => res.json())
+          .then(data => {
+            setCreatorInfo(data.results);
+            setHeartRed(data.results.is_like_True);
+          })
+      : fetch(`${API.DETAIL_PAGE}/${params.id}`)
+          .then(res => res.json())
+          .then(data => {
+            setCreatorInfo(data.results);
+            setHeartRed(data.results.is_like_True);
+          });
   }, [params.id]);
 
   useEffect(() => {
@@ -53,103 +61,115 @@ const ProductDetail = () => {
   };
 
   const {
-    sub_category,
+    course_id,
+    course_level,
+    course_like,
     course_name,
-    page_image,
+    counrse_stat,
+    description,
+    is_like_True,
+    payment_period,
     price,
     discount_price,
     discount_rate,
+    profile_image,
+    sub_category,
+    thumbnail_url,
     user_name,
-    payment_period,
-    course_like,
-    profile,
-    description,
   } = creatorInfo;
 
   const isLikeyOnNumber = heart ? course_like + 1 : course_like;
 
   const onSubmitUserComment = e => {
-    e.preventDefault();
     if (comment === '') {
       return;
     }
-    fetch(`${API.PRODUCTS}/${params.id}/comments`, {
-      method: 'POST',
-      headers: {
-        Authorization: localStorage.getItem('TOKEN'),
-      },
-      body: JSON.stringify({
-        content: comment,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        setCommentArray(res.message);
-      });
-    setComment('');
+
+    isLogin
+      ? fetch(`${API.PRODUCTS}/${params.id}/comments`, {
+          method: 'POST',
+          headers: {
+            Authorization: localStorage.getItem('kakao_token'),
+          },
+          body: JSON.stringify({
+            content: comment,
+          }),
+        })
+          .then(res => res.json())
+          .then(res => {
+            setCommentArray(res.message);
+            setComment('');
+          })
+      : alert('로그인이 필요합니다.');
   };
 
   const onRemoveComment = id => {
-    fetch(`${API.PRODUCTS}/${params.id}/comments`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: localStorage.getItem('TOKEN'),
-      },
-      body: JSON.stringify({
-        comment_id: id,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message === 'SUCCESS_DELETE') {
-          setCommentArray(commentArray.filter(user => user.id !== id));
-        }
-        if (res.message === 'INVAILD_COMMENT') {
-          alert('일치하지 않은 아이디입니다.');
-        }
-      });
+    isLogin
+      ? fetch(`${API.PRODUCTS}/${params.id}/comments`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: localStorage.getItem('kakao_token'),
+          },
+          body: JSON.stringify({
+            comment_id: id,
+          }),
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res.message === 'SUCCESS_DELETE') {
+              setCommentArray(commentArray.filter(user => user.id !== id));
+            }
+            if (res.message === 'INVAILD_COMMENT') {
+              alert('일치하지 않은 아이디입니다.');
+            }
+          })
+      : alert('로그인이 필요합니다.');
   };
 
   const isLikeyOnHandler = () => {
-    fetch(`${API.LIKE}`, {
-      method: 'POST',
-      headers: {
-        Authorization: localStorage.getItem('TOKEN'),
-      },
-      body: JSON.stringify({
-        course_id: params.id,
-      }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message === 'SUCCESS_LIKE') {
-          setHeartRed(prev => !prev);
-        }
-        if (res.message === 'DELETE_LIKE') {
-          setHeartRed(prev => !prev);
-        }
-      });
+    isLogin
+      ? fetch(`${API.LIKE}`, {
+          method: 'POST',
+          headers: {
+            Authorization: localStorage.getItem('kakao_token'),
+          },
+          body: JSON.stringify({
+            course_id: params.id,
+          }),
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res.message === 'SUCCESS_LIKE') {
+              setHeartRed(prev => !prev);
+            }
+            if (res.message === 'DELETE_LIKE') {
+              setHeartRed(prev => !prev);
+            }
+          })
+      : alert('로그인이 필요합니다.');
   };
 
   const addToCart = () => {
-    fetch(`${API.PRODUCTS}/${params.id}/order`, {
-      method: 'POST',
-      headers: {
-        Authorization: localStorage.getItem('TOKEN'),
-      },
-    })
-      .then(res => res.json)
-      .then(res => {
-        if (res.message === 'SUCCESS') {
-          alert('결제가 완료되었습니다.');
-        }
-      });
+    isLogin
+      ? fetch(`${API.PRODUCTS}/${params.id}/order`, {
+          method: 'POST',
+          headers: {
+            Authorization: localStorage.getItem('kakao_token'),
+          },
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res.message === 'SUCCESS') {
+              alert('결제가 완료되었습니다.');
+            }
+          })
+      : alert('로그인이 필요합니다.');
   };
 
   return (
     <ProductDetailContanier>
       <TopImageWrap>
-        <Image src={page_image} />
+        <Image src={`http://${thumbnail_url}`} />
       </TopImageWrap>
       <FlexWrap>
         <FlexLeft>
@@ -172,7 +192,9 @@ const ProductDetail = () => {
                   </CreatorName>
                 )}
               </div>
-              <div>{profile && <CreatorProfile src={profile} />}</div>
+              <div>
+                {profile_image && <CreatorProfile src={profile_image} />}
+              </div>
             </CreatorWrap>
             <MiddleLine />
             {description && (
@@ -191,7 +213,7 @@ const ProductDetail = () => {
           />
           <CommentInputWrap onSubmit={onSubmitUserComment}>
             <CommentInput value={comment} onChange={commentAdditional} />
-            <CommnetSubmit onClick={onSubmitUserComment} />
+            <CommnetSubmit onClick={onSubmitUserComment} type="button" />
           </CommentInputWrap>
 
           <MiddleLine />
@@ -233,32 +255,24 @@ const ProductDetail = () => {
             <Status
               status="체력"
               icon={<GiHeartPlus />}
-              number={
-                creatorInfo.course_stat ? creatorInfo.course_stat[0].score : 0
-              }
+              number={creatorInfo.health_stat}
             />
             <Status
               status="지능"
               icon={<GiBookCover />}
-              number={
-                creatorInfo.course_stat ? creatorInfo.course_stat[3].score : 0
-              }
+              number={creatorInfo.intellect_stat}
             />
           </StatusWrap>
           <StatusWrap>
             <Status
               status="매력"
               icon={<GiCharm />}
-              number={
-                creatorInfo.course_stat ? creatorInfo.course_stat[1].score : 0
-              }
+              number={creatorInfo.charm_stat}
             />
             <Status
               status="예술"
               icon={<FaPaintBrush />}
-              number={
-                creatorInfo.course_stat ? creatorInfo.course_stat[2].score : 0
-              }
+              number={creatorInfo.art_stat}
             />
           </StatusWrap>
           <GrayLine />
@@ -266,7 +280,7 @@ const ProductDetail = () => {
             <label>
               <HeartButtonCheckbox onClick={isLikeyOnHandler} />
               <HeartButton
-                number={isLikeyOnNumber ? isLikeyOnNumber : ''}
+                number={isLikeyOnNumber ? isLikeyOnNumber : 0}
                 icon={heart ? <Heart /> : <HeartOutline />}
                 onClick={isLikeyOnHandler}
               />
@@ -290,10 +304,11 @@ const TopImageWrap = styled.div`
   margin: ${props => props.theme.marginCenter};
 `;
 
-const Image = styled.img.attrs({
-  alt: '메인',
-})`
-  height: 519px;
+const Image = styled.div`
+  height: 740px;
+  background-image: url(${props => props.src});
+  background-size: cover;
+  background-position: center;
 `;
 
 const FlexWrap = styled.div`

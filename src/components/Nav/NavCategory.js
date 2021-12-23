@@ -11,7 +11,7 @@ import {
   CATEGORY_DATA_LIST_6,
 } from './categoryData';
 
-function NavCategory() {
+function NavCategory({ isLogin }) {
   const navigate = useNavigate();
 
   const navigateCategory = category => {
@@ -22,10 +22,13 @@ function NavCategory() {
     navigate(`/category?category=${category}&sub_category=${subcategory}`);
   };
 
+  const gotoCreator = () => {
+    isLogin ? navigate('/creator') : alert('로그인이 필요합니다.');
+  };
   return (
     <CategoryContainer>
       <CategoryWrapper>
-        <Category onClick={() => navigateCategory('디지털아트')}>
+        <Category onClick={() => navigateCategory('디지털 드로잉')}>
           디지털 아트
         </Category>
         <SubCategoryContainer>
@@ -34,7 +37,9 @@ function NavCategory() {
               return (
                 <SubCategory
                   key={data.id}
-                  onClick={() => navigateSubCategory('디지털아트', data.value)}
+                  onClick={() =>
+                    navigateSubCategory('디지털 드로잉', data.value)
+                  }
                 >
                   {data.value}
                 </SubCategory>
@@ -139,9 +144,9 @@ function NavCategory() {
         </SubCategoryContainer>
       </CategoryWrapper>
 
-      <Link to="/">
+      <GotoCreator type="button" onClick={gotoCreator}>
         <Creator>크리에이터 센터</Creator>
-      </Link>
+      </GotoCreator>
     </CategoryContainer>
   );
 }
@@ -208,4 +213,9 @@ const Creator = styled.button`
   color: ${props => props.theme.orange};
   font-size: ${props => props.theme.fontRegular};
   font-weight: ${props => props.theme.weightBold};
+`;
+
+const GotoCreator = styled.button`
+  display: inherit;
+  margin: 0 auto;
 `;

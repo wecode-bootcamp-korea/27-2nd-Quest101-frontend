@@ -5,7 +5,6 @@ const { Kakao } = window;
 export const kakaoInit = () => {
   Kakao.init(process.env.REACT_APP_KAKAO_API_KEY);
 };
-
 // 프론트 테스트 통신용
 // export const kakaoLogin = (navigate, setIsLogin) => {
 //   if (!Kakao.isInitialized()) kakaoInit();
@@ -72,10 +71,6 @@ export const kakaoBreakConnection = setIsLogin => {
 };
 
 export const kakaoLogingOut = setIsLogin => {
-  if (!Kakao.Auth.getAccessToken()) {
-    alert('로그인 상태가 아닙니다.');
-    return;
-  }
   Kakao.Auth.logout(function () {
     localStorage.clear();
     setIsLogin(false);

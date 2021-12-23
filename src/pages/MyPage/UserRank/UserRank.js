@@ -6,14 +6,13 @@ import styled from 'styled-components';
 import { GiHeartPlus, GiBookCover, GiCharm } from 'react-icons/gi';
 import { FaPaintBrush } from 'react-icons/fa';
 
-const UserRank = props => {
-  // console.log(Object.values(props.status[0]));
+const UserRank = ({ stats }) => {
   return (
     <UserRankContainer>
       <RankTitle>내 등급</RankTitle>
       <RankWrap>
         <Rank>Lv. 입문</Rank>
-        <Chart status={props} />
+        <Chart stats={stats?.stat} />
         <StatusText>Status</StatusText>
         <StatusWrap>
           <Status status="체력" icon={<GiHeartPlus />} />
@@ -36,7 +35,6 @@ const RankTitle = styled.p`
 `;
 
 const RankWrap = styled.div`
-  width: 268px;
   height: 238px;
   margin: 38px 0;
   padding: 0 25px;

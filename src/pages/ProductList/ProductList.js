@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductCardList from '../../components/ProductCard/ProductCardList';
 import SimpleSlider from './SimpleSlider';
 import { API } from '../../config';
@@ -7,9 +7,10 @@ import styled from 'styled-components';
 
 const QUERY_STRING = ['?stat=체력', '?stat=지능', '?stat=매력', '?stat=예술'];
 
-const ProductList = () => {
+const ProductList = ({ isLogin, setIsLogin }) => {
   const [productCardList, setProductCardList] = useState({});
   const [stat, setStat] = useState('');
+  const navigate = useNavigate();
 
   const [statBtn, setStatBtn] = useState({
     first: false,
@@ -27,26 +28,34 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    fetch(`${API.LIST}${stat}`, {
-      headers: { Authorization: localStorage.getItem('TOKEN') },
-    })
-      .then(res => res.json())
-      .then(res => setProductCardList(res.results));
+    isLogin
+      ? fetch(`${API.LIST}${stat}`, {
+          headers: { Authorization: localStorage.getItem('kakao_token') },
+        })
+          .then(res => res.json())
+          .then(res => setProductCardList(res.results))
+      : fetch(`${API.LIST}${stat}`)
+          .then(res => res.json())
+          .then(res => setProductCardList(res.results));
   }, [stat]);
+
+  const gotoCreator = () => {
+    isLogin ? navigate('/creator') : alert('로그인이 필요합니다.');
+  };
 
   return (
     <div>
       {productCardList.length > 0 && (
         <>
           <SimpleSlider />
-          <Link to="/creator">
+          <GotoCreator type="button" onClick={gotoCreator}>
             <BeltBanner>
               <BeltBannerText>퀘스트 101 </BeltBannerText>
               <BeltBannerTextBold>크리에이터 시작하기 !</BeltBannerTextBold>
               <BeltBannerText>&gt;</BeltBannerText>
               <BeltBannerImage />
             </BeltBanner>
-          </Link>
+          </GotoCreator>
           <ButtonContainer>
             <Button
               type="button"
@@ -156,4 +165,9 @@ const ProductContainer = styled.div`
   margin: 0 auto;
   padding-bottom: 100px;
   list-style: none;
+`;
+
+const GotoCreator = styled.button`
+  display: inherit;
+  margin: 0 auto;
 `;
